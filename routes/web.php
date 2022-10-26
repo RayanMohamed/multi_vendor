@@ -30,7 +30,9 @@ Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function
     // Route::get('register','AdminController@register');
     Route::group(['middleware'=>['admin']],function(){
 
-        Route::get('dashboard','AdminController@dashboard');
+        
+    });
+   Route::get('dashboard','AdminController@dashboard');
 
         Route::match(['get','post'],'update-admin-password','AdminController@updateAdminPassword');
         
@@ -47,8 +49,6 @@ Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function
          Route::post('update-admin-status','AdminController@updateAdminStatus');
 
         Route::get('logout','AdminController@logout');
-    });
-   
 
 });
 
@@ -57,6 +57,22 @@ Route::namespace('App\Http\Controllers\Front')->group(function(){
 
     Route::get('About_us','VendorController@About_us');
 
+    Route::get('google.login','VendorController@redirectToProvider') ;
+               
+
+    Route::get('/auth/google/callback','VendorController@handleCallback')
+               ->name('google.login.callback'); 
+
+    // Route::get('google',function(){
+    //     Return view('googleAuth');
+
+    // });
+
+    // Route::get('auth/google', 'VendorController@redirectToGoogle');
+
+    // Route::get('auth/google/callback', 'VendorController@handleGoogleCallback');
+
+    
     Route::get('vendorlogin','VendorController@vendorlogin');
 
     //vendor login/register
