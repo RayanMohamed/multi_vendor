@@ -3,16 +3,145 @@
 namespace App\Http\Controllers\Front;
 
 use Illuminate\Support\Facades\Redirect;
+// use App\Http\Controllers\Front\AuthenticatesUsers;
+// use app\Http\Controllers\Auth\LoginController.php;
 use Illuminate\Support\Facades\Mail;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Admin;
 use App\Models\Vendors;
+use AuthenticatesUsers;
 use Validator;
 use DB;
+use Socialite;
+use Auth;
 
 class VendorController extends Controller
 {
+	
+
+    // public function __construct()
+
+    // {
+
+    //     $this->middleware('guest')->except('logout');
+
+    // }
+
+    // public function redirectToprovider()
+
+    // {
+
+    //     return Socialite::driver('google')->redirect();
+
+    // }
+
+    // public function handleCallback()
+
+    // {
+
+    //     try {
+
+    //         $user = Socialite::driver('google')->user();
+
+    //         $finduser = User::where('google_id', $user->id)->first();
+
+    //         if($finduser){
+
+    //             Auth::login($finduser);
+
+    //             return redirect('/home');
+
+    //         }else{
+
+    //             $newUser = User::create([
+
+    //                 'name' => $user->name,
+
+    //                 'email' => $user->email,
+
+    //           'google_id'=> $user->id
+
+    //             ]);
+
+    //             Auth::login($newUser);
+
+    //             return redirect()->back();
+
+    //         }
+
+    //     } catch (Exception $e) {
+
+    //         return redirect('google.login');
+
+    //     }
+    //     dd($user);
+
+    // }
+
+
+
+
+
+
+
+
+
+
+
+
+    public function redirectToProvider()
+
+    {
+
+        return Socialite::driver('google')->redirect();
+
+    }
+
+    public function handleCallback(Request $request){
+    	try {
+
+            $user = Socialite::driver('google')->stateless()->user()->name;
+            if( Auth::guard('admin')->user()->confirm=="No"){
+                         return redirect()->back()->with('error_message','Please confirm your email to activate your vendor account'); 
+                    }else{
+                        return redirect('admin/dashboard');
+                    }
+        }catch(Exception $e){
+        	return redirect('vendorlogin');
+        }
+
+        // dd($user);
+        // $finduser = Vendors::where('google_id', $user->id)->first();
+        // if($finduser){
+
+        //         Auth::login($finduser, true);
+        // }
+        // else{
+        // 	$newUser = Vendors::create([
+
+        //             'name' => $user->name,
+
+        //             'email' => $user->email,
+
+        //             'google_id'=> $user->id
+
+        //         ]);
+        // 	Vendors::login($newUser, true);
+
+
+        // }
+        return redirect('admin/dashboard');               
+	            
+
+
+
+
+        
+
+
+    }
+
 	public function vendorlogin(){
     	return view('front.vendors.login_register');
     }
@@ -138,5 +267,7 @@ class VendorController extends Controller
     		abort(404);
     	}
     }
+
+
 
 }

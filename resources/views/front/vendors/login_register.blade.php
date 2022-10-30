@@ -129,7 +129,7 @@
 		                        	<a class="btn btn-link-2" href="#">
 		                        		<i class="fa fa-twitter"></i> Twitter
 		                        	</a>
-		                        	<a class="btn btn-link-2" href="#">
+		                        	<a class="btn btn-link-2" href="{{url('google.login')}}">
 		                        		<i class="fa fa-google-plus"></i> Google Plus
 		                        	</a>
 	                        	</div>
@@ -179,6 +179,15 @@
 				                        <button type="submit" class="btn">Sign me up!</button>
 				                    </form>
 			                    </div>
+                                <div class="social-login">
+                                <h3>...or login with:</h3>
+                                <div class="social-login-buttons">
+                                    
+                                    <a class="btn btn-link-2" href="{{url('google.login')}}">
+                                        <i class="fa fa-google-plus"></i> Google Plus
+                                    </a>
+                                </div>
+                            </div>
                         	</div>
                         	
                         </div>
